@@ -6,7 +6,7 @@ public class Account {
 	private int companyName;
 	private int deliveryPreference;
 	private int linkedAccounts;
-	private int id;
+	private int accountId;
 	private int userId;
 
 	public void setPassword() {

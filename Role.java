@@ -1,6 +1,6 @@
 public class Role {
 
-	private int id;
+	private int roleId;
 	private int roleName;
 	private int permissions;
 

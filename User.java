@@ -1,6 +1,6 @@
 public class User {
 
-	private int id;
+	private int userId;
 	private int lastFourSocial;
 	private int birthday;
 	private int name;
