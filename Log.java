@@ -3,7 +3,7 @@ public class Log {
 	private int timeStamp;
 	private int activityInfo;
 	private int accountId;
-	private int id;
+	private int logId;
 
 	public void display() {
 		// TODO - implement Log.display

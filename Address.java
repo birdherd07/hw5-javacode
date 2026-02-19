@@ -5,7 +5,7 @@ public class Address {
 	private int zipCode;
 	private int state;
 	private int country;
-	private int id;
+	private int addressId;
 
 	public void setAddress() {
 		// TODO - implement Address.setAddress
