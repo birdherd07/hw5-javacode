@@ -16,6 +16,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Download JUnit Launcher
+        run: wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar -O ./docinc/lib/junit-standalone.jar
+
       - name: Compile Code and Tests
         run: |
           mkdir -p bin
