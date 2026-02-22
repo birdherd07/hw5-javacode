@@ -19,7 +19,7 @@ jobs:
       - name: Compile Code and Tests
         run: |
           mkdir -p bin
-          javac -d bin -cp "docinc/lib/*" docinc/src/*.java
+          javac -d bin -cp ./docinc/lib/* ./docinc/src/*.java
 
       - name: Run JUnit Tests
         # This uses the JUnit Console Launcher
