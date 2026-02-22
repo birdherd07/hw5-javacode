@@ -1,3 +1,4 @@
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -32,9 +33,23 @@ public class UserTest {
 
     //Regular testing
     @Test
-    public void setBirthday_throws_exception_on_invalid_date() {
+    public void setBirthday_throws_exception_on_negative_date() {
         User testUser = new User(1, 1, "Sam Samson", 19981010, 1000);
         assertThrows(IllegalArgumentException.class,
                     () -> { testUser.setBirthday(-1); });
+    }
+
+    @Test
+    public void setBirthday_throws_exception_on_future_date() {
+      User testUser = new User(1, 1, "Sam Samson", 19981010, 1000);
+      assertThrows(IllegalArgumentException.class,
+                   () -> { testUser.setBirthday(20301212); });
+    }
+
+    @Test
+    public void setBirthday_changes_birthday_on_valid_date() {
+      User testUser = new User(1, 1, "Sam Samson", 19981010, 1000);
+      testUser.setBirthday(19991111);
+      assertEquals(19991111, testUser.getBirthday());
     }
 }
