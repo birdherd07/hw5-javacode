@@ -27,7 +27,7 @@ jobs:
       - name: Run JUnit Tests
         # This uses the JUnit Console Launcher
         run: |
-          java -cp "bin:lib/*" org.junit.platform.console.ConsoleLauncher \
+          java -cp "bin:docinc/lib/*" org.junit.platform.console.ConsoleLauncher \
             --scan-class-path \
             --fail-if-no-tests \
             --reports-dir=test-results
