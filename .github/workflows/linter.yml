@@ -1,0 +1,28 @@
+name: Run PMD Linter
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: JDK Setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Download and install PMD
+        run: |
+          PMD_VERSION=6.55.0
+          wget https://github.com
+          unzip pmd-bin-6.55.0.zip
+          echo "$(pwd)/pmd-bin-6.55.0/bin" >> $GITHUB_PATH
+
+      - name: Run PMD analysis and generate XML report
+        run: |
+          pmd check -d src -R java-rules.xml -f xml --no-cache > pmd_report.xml
