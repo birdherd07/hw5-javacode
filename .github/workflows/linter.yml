@@ -3,26 +3,37 @@ name: Run PMD Linter
 on: [push, pull_request]
 
 jobs:
-  lint:
+  pmd-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: JDK Setup
+
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
           distribution: 'temurin'
-          cache: 'maven'
+          java-version: '17'
 
-      - name: Download and install PMD
+      - name: Install PMD
         run: |
-          PMD_VERSION=6.55.0
-          wget https://github.com
-          unzip pmd-bin-6.55.0.zip
-          echo "$(pwd)/pmd-bin-6.55.0/bin" >> $GITHUB_PATH
+          PMD_VERSION=$(curl -s https://api.github.com/repos/pmd/pmd/releases/latest | jq -r .tag_name | sed 's/pmd_releases\///')
+          wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-dist-${PMD_VERSION}-bin.zip
+          unzip pmd-dist-${PMD_VERSION}-bin.zip
+          mv pmd-bin-${PMD_VERSION} pmd
 
-      - name: Run PMD analysis and generate XML report
+      - name: Run PMD
         run: |
-          pmd check -d src -R java-rules.xml -f xml --no-cache > pmd_report.xml
+          ./pmd/bin/pmd check \
+            --dir ./docinc/src \
+            --rulesets ./java-rules.xml \
+            --format text \
+            --cache .pmd-cache \
+            --fail-on-violation true
+
+      - name: Upload PMD Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmd-report
+          path: pmd-report.txt
